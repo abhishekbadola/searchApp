@@ -1,5 +1,7 @@
 # SearchApp
 
+You can watch the Live demo of this starter App [Here](https://abhishekbadola.github.io/searchApp) 
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.1.
 
 ## Development server
