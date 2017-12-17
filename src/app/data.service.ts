@@ -15,7 +15,7 @@ export class DataService {
   private searchData = new BehaviorSubject<any>([]);
   searchDataObservable = this.searchData.asObservable();
 
-  private endpoint = 'http://api.tvmaze.com';
+  private endpoint = 'https://api.tvmaze.com';
   private url = '';
 
   changeQuery(query) {
