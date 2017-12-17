@@ -1,6 +1,13 @@
-# SearchApp
+# Angular 5 Search App
 
-You can watch the Live demo of this starter App [Here](https://abhishekbadola.github.io/searchApp) 
+You can watch the Live demo of this Angular based search App [**Here**](https://abhishekbadola.github.io/searchApp) 
+> [**TVMaze API**](http://www.tvmaze.com/api) is used to get the live records
+> Search can be made based on shows or people.
+> Angular animations is also applied on the Recent search queries. you can click on them also to remove recent search queries from view
+> For UI material design and components were used.
+> The records will be shown in form of cards.
+> Built on Angular 5 Latest.
+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.1.
 
