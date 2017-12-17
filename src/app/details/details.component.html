@@ -1,10 +1,32 @@
-<p>
-  This is what I'm all about. <a routerLink=""><strong>Take me back</strong></a>.
-  <!-- (click)="sendMeHome()" -->
+<p [hidden]="searchData.length">
+  <br>
+  <br>
+  <br> Nothing to Show here !!!
 </p>
 
-<ul>
-  <li *ngFor="let goal of goals">
-    {{ goal }}
-  </li>
-</ul>
+<div class="detailed-view">
+    <mat-card class="results-card" *ngFor="let data of searchData">
+        <mat-card-header *ngIf="data.show">
+          <img mat-card-avatar src="{{data.show.image ? data.show.image.medium : noAvatarImg}}" alt="Avatar">
+          <mat-card-title>{{data.show.name}}</mat-card-title>
+          <mat-card-subtitle *ngIf="data.show">{{data.show.type + ': ' + data.show.language}}</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-header *ngIf="data.person">
+          <img mat-card-avatar src="{{data.person.image ? data.person.image.medium : noAvatarImg}}" alt="Avatar">
+          <mat-card-title>{{data.person.name}}</mat-card-title>
+          <mat-card-subtitle>Type: Person</mat-card-subtitle>
+        </mat-card-header>
+
+        <img mat-card-image src="{{data.show ? (data.show.image ? data.show.image.original : noMainImg) : (data.person.image ? data.person.image.original : noMainImg)}}" alt="Card Image">
+        <mat-card-content *ngIf="data.show">
+          <p [innerHTML]="data.show.summary ? (data.show.summary.length > 100 ? data.show.summary.substring(0, 100) + '...' : data.show.summary) : 'Sorry! No summary available'">
+          </p>
+        </mat-card-content>
+        <mat-card-footer>
+          <mat-card-actions>
+            <a href="{{data.show ? data.show.url : data.person.url}}" target="_blank" mat-raised-button  color="primary">MORE</a>
+          </mat-card-actions>
+        </mat-card-footer>
+      </mat-card>
+</div>

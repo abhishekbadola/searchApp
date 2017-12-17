@@ -1,0 +1,35 @@
+mat-card {
+  width: 20%;
+  margin-bottom: 15px;
+}
+
+.detailed-view {
+  display: flex;
+  flex-flow: wrap;
+  justify-content: space-around;
+}
+
+.mat-card-image {
+  height: 300px
+}
+
+mat-card-content.mat-card-content {
+  padding-bottom: 25px;
+}
+
+.mat-card-actions {
+  position: absolute;
+  bottom: -10px;
+  right: 30px;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+  mat-card {
+    width: 50%;
+  }
+}
+@media only screen and (max-width: 768px) {
+  mat-card {
+    width: 100%;
+  }
+}

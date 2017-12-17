@@ -1,15 +1,46 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class DataService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  private goals = new BehaviorSubject<any>(['My first life goal', 'I want to climb a mountain', 'Go ice skiing']);
-  goalsObservable = this.goals.asObservable();
+  private queries = new BehaviorSubject<any>([]);
+  queriesObservable = this.queries.asObservable();
 
-  changeGoal(goal) {
-    this.goals.next(goal);
+  private searchData = new BehaviorSubject<any>([]);
+  searchDataObservable = this.searchData.asObservable();
+
+  private endpoint = 'http://api.tvmaze.com';
+  private url = '';
+
+  changeQuery(query) {
+    this.queries.next(query);
+  }
+
+  getResults(searchOption, query): Observable<any[]> {
+    switch (searchOption.toLowerCase()) {
+      case 'shows': {
+        this.url = this.endpoint + '/search/shows?q=' + encodeURI(query);
+        break;
+      }
+      case 'people': {
+        this.url = this.endpoint + '/search/people?q=' + encodeURI(query);
+        break;
+      }
+    }
+    return this.http.get<any[]>(this.url).map(
+      res => {
+        this.searchData.next(res);
+        return res;
+      }
+      // {
+      //   return this.searchData.next(res);
+      // }
+    );
   }
 }

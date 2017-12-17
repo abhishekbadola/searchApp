@@ -1,27 +1,49 @@
 <div class="container color-dark">
   <div class="col">
-    <p>Add a bucket list item</p>
+    <p>Let's get the search started
+      <span class="smiley">&#9786;</span>
+    </p>
   </div>
   <div class="col">
-    <p>Your bucket list</p>
+    <p>Recently searched queries</p>
   </div>
 </div>
-<div class="container color-light" [@goals]="goals.length">
+<div class="container color-light" [@queries]="queries.length">
   <div class="col">
-    <p class="sm">Use this form below to add a new bucket list goal. What do you want to accomplish in your life?</p>
+    <p class="sm">
+      Search through all the shows in our database by the show's name. A fuzzy algorithm is used (with a fuzziness value of 2),
+      meaning that shows will be found even if your query contains small typos. Results are returned in order of relevancy
+      (best matches on top) and contain each show's full information.
+    </p>
 
-    <form>
-      <input type="text" class="txt" name="item" placeholder="Life goal.." [(ngModel)]="itemText">
+    <form class="search-form">
+      <mat-form-field>
+          <mat-select [(value)]="selectedOption">
+              <mat-option *ngFor="let option of searchOptions" [value]="option">
+                {{ option }}
+              </mat-option>
+          </mat-select>
+      </mat-form-field>
       <br>
-      <span>{{itemText}}</span>
+      <mat-form-field class="field-full-width">
+        <input type="text" placeholder="Enter your search query.." aria-label="Enter your search query.." matInput [formControl]="myControl"
+          [matAutocomplete]="auto" [(ngModel)]="searchQuery">
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let query of queries" [value]="query">
+            {{ query }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
       <br>
-      <br>
-      <input type="submit" class="btn" value="Add Item" (click)="addItem()">
+      <button type="submit" mat-raised-button color="primary" (click)="searchItem()">
+        <mat-icon matPrefix>search</mat-icon>
+        Search
+      </button>
     </form>
   </div>
   <div class="col">
-    <p class="life-container" *ngFor="let goal of goals; let i = index" (click)="removeItem(i)">
-      {{goal}}
+    <p class="life-container" *ngFor="let query of queries; let i = index" (click)="removeItem(i)">
+      {{query}}
     </p>
   </div>
 </div>

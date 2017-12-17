@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, style, transition, animate, keyframes, query, stagger } from '@angular/animations';
 import { DataService } from '../data.service';
+import { FormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   animations: [
-    trigger('goals', [
+    trigger('queries', [
       transition('* => *', [
 
         query(':enter', style({ opacity: 0 }), { optional: true }),
@@ -30,27 +32,49 @@ import { DataService } from '../data.service';
   ]
 })
 export class HomeComponent implements OnInit {
-
   itemCount = 4;
-  itemText = 'We are happy to see you';
-  goals = [];
+  searchQuery = '';
+  queries = [];
 
-  constructor(private _data: DataService) {
+  searchOptions: [string] = [
+    'Shows',
+    'People'
+  ];
+  selectedOption = this.searchOptions[0];
+
+  searchData = [];
+  myControl: FormControl = new FormControl();
+
+  constructor(private router: Router, private _data: DataService) {
   }
 
   ngOnInit() {
-    this._data.goalsObservable.subscribe(res => this.goals = res);
-    this._data.changeGoal(this.goals);
+    this._data.searchDataObservable.subscribe(res => {
+      this.searchData = res;
+      console.log(res);
+    });
+    this._data.queriesObservable.subscribe(res => this.queries = res);
+    this._data.changeQuery(this.queries);
   }
 
   addItem() {
-    this.goals.push(this.itemText);
-    this.itemText = '';
-    this._data.changeGoal(this.goals);
+    this.queries.push(this.searchQuery);
+    this.searchQuery = '';
+    this._data.changeQuery(this.queries);
+  }
+
+  searchItem() {
+    this._data.getResults(this.selectedOption, this.searchQuery)
+      .subscribe(res => {
+        this.searchData = res;
+        this.router.navigate(['/details']);
+        console.log(res);
+      });
+    this.addItem();
   }
 
   removeItem(i) {
-    this.goals.splice(i, 1);
-    this._data.changeGoal(this.goals);
+    this.queries.splice(i, 1);
+    this._data.changeQuery(this.queries);
   }
 }
