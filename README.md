@@ -1,4 +1,4 @@
-# Angular 5 Search App
+# TV Maze Search App (Angular 5) 
 
 You can watch the Live demo of this Angular based search App [**Here**](https://abhishekbadola.github.io/searchApp) 
 > [**TVMaze API**](http://www.tvmaze.com/api) is used to get the live records
